@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>MS SMD Lens</title>
+<title>MF SMD Lens</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MF SMD Lens">
+<meta name="theme-color" content="#0a0c10">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -97,14 +103,11 @@
   }
 
   .header-icon {
-    width: 46px;
-    height: 46px;
-    background: linear-gradient(135deg, rgba(0,229,160,0.15), rgba(0,144,255,0.1));
-    border-radius: 14px;
+    width: 72px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0,229,160,0.2);
   }
 
   /* Input Card */
@@ -496,6 +499,83 @@
     width: 100%;
   }
 </style>
+
+<script>
+// Generate icon as canvas and set as apple-touch-icon
+(function() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#0a0c10';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, 512, 512, 80);
+  ctx.fill();
+
+  // Gradient
+  const grad = ctx.createLinearGradient(0, 0, 512, 512);
+  grad.addColorStop(0, '#4da8e8');
+  grad.addColorStop(1, '#9b6fd4');
+
+  ctx.strokeStyle = grad;
+  ctx.lineCap = 'round';
+
+  const s = 512 / 100; // scale factor
+
+  function line(x1, y1, x2, y2, w) {
+    ctx.lineWidth = w * s;
+    ctx.beginPath();
+    ctx.moveTo(x1 * s, y1 * s);
+    ctx.lineTo(x2 * s, y2 * s);
+    ctx.stroke();
+  }
+
+  function rrect(x, y, w, h, r, lw) {
+    ctx.lineWidth = lw * s;
+    ctx.beginPath();
+    ctx.roundRect(x*s, y*s, w*s, h*s, r*s);
+    ctx.stroke();
+  }
+
+  // Outer chip
+  rrect(22, 22, 56, 56, 10, 4);
+  // Inner chip
+  rrect(32, 32, 36, 36, 6, 3);
+
+  // Pins
+  const pins = [
+    [38,22,38,10],[50,22,50,10],[62,22,62,10],
+    [38,78,38,90],[50,78,50,90],[62,78,62,90],
+    [22,38,10,38],[22,50,10,50],[22,62,10,62],
+    [78,38,90,38],[78,50,90,50],[78,62,90,62],
+  ];
+  pins.forEach(([x1,y1,x2,y2]) => line(x1,y1,x2,y2,3.5));
+
+  // M text
+  ctx.fillStyle = grad;
+  ctx.font = `bold ${30*s}px 'DM Sans', sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('M', 50*s, 50*s);
+
+  // Set as apple touch icon
+  const dataUrl = canvas.toDataURL('image/png');
+  let link = document.querySelector("link[rel='apple-touch-icon']");
+  if (!link) { link = document.createElement('link'); link.rel = 'apple-touch-icon'; document.head.appendChild(link); }
+  link.href = dataUrl;
+
+  // Also set favicon
+  let favicon = document.querySelector("link[rel='icon']");
+  if (!favicon) { favicon = document.createElement('link'); favicon.rel = 'icon'; document.head.appendChild(favicon); }
+  favicon.href = dataUrl;
+
+  // Store for manifest
+  window._appIconDataUrl = dataUrl;
+})();
+</script>
+
 </head>
 <body>
 
@@ -508,13 +588,41 @@
       <!-- Header -->
       <div class="header">
         <div class="header-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="10" cy="10" r="7"/>
-            <line x1="15.5" y1="15.5" x2="22" y2="22"/>
+          <svg width="54" height="54" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="chipGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#4da8e8"/>
+                <stop offset="100%" stop-color="#9b6fd4"/>
+              </linearGradient>
+            </defs>
+            <!-- Outer chip body -->
+            <rect x="22" y="22" width="56" height="56" rx="10" ry="10" stroke="url(#chipGrad)" stroke-width="4" fill="none"/>
+            <!-- Inner chip body -->
+            <rect x="32" y="32" width="36" height="36" rx="6" ry="6" stroke="url(#chipGrad)" stroke-width="3" fill="none"/>
+            <!-- Top pins -->
+            <line x1="38" y1="22" x2="38" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="50" y1="22" x2="50" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="62" y1="22" x2="62" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Bottom pins -->
+            <line x1="38" y1="78" x2="38" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="50" y1="78" x2="50" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="62" y1="78" x2="62" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Left pins -->
+            <line x1="22" y1="38" x2="10" y2="38" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="22" y1="50" x2="10" y2="50" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="22" y1="62" x2="10" y2="62" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Right pins -->
+            <line x1="78" y1="38" x2="90" y2="38" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="78" y1="50" x2="90" y2="50" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="78" y1="62" x2="90" y2="62" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- M text in centre -->
+            <text x="50" y="50" text-anchor="middle" dominant-baseline="central"
+              font-family="DM Sans, sans-serif" font-weight="700" font-size="30"
+              fill="url(#chipGrad)">M</text>
           </svg>
         </div>
         <div class="header-left">
-          <div class="app-title">MS SMD Lens</div>
+          <div class="app-title">MF SMD Lens</div>
           <div class="app-subtitle">Resistor Code Decoder</div>
         </div>
       </div>
@@ -937,5 +1045,53 @@ function renderHistory() {
   `).join('');
 }
 </script>
+
+<script>
+// Generate manifest.json dynamically and register service worker
+window.addEventListener('load', function() {
+
+  // Create manifest blob
+  const manifest = {
+    name: "MF SMD Lens",
+    short_name: "MF SMD Lens",
+    description: "SMD Resistor Code Decoder",
+    start_url: ".",
+    display: "standalone",
+    background_color: "#0a0c10",
+    theme_color: "#0a0c10",
+    orientation: "portrait",
+    icons: [
+      { src: window._appIconDataUrl || "", sizes: "512x512", type: "image/png", purpose: "any maskable" }
+    ]
+  };
+
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const manifestUrl = URL.createObjectURL(blob);
+  let manifestLink = document.querySelector("link[rel='manifest']");
+  if (!manifestLink) {
+    manifestLink = document.createElement('link');
+    manifestLink.rel = 'manifest';
+    document.head.appendChild(manifestLink);
+  }
+  manifestLink.href = manifestUrl;
+
+  // Register service worker for offline support
+  if ('serviceWorker' in navigator) {
+    const swCode = `
+      const CACHE = 'mf-smd-lens-v1';
+      self.addEventListener('install', e => {
+        e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/'])));
+      });
+      self.addEventListener('fetch', e => {
+        e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+      });
+    `;
+    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+    const swUrl = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(() => {});
+  }
+});
+</script>
+
 </body>
 </html>
