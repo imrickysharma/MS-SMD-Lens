@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -34,500 +33,500 @@
     --radius-xs: 10px;
   }
 
-- { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html {
-overflow-x: hidden;
-overscroll-behavior: none;
-}
+  html {
+    overflow-x: hidden;
+    overscroll-behavior: none;
+  }
 
-body {
-background: var(–bg);
-color: var(–text);
-font-family: ‘DM Sans’, sans-serif;
-min-height: 100vh;
-overflow-x: hidden;
-overscroll-behavior: none;
-touch-action: pan-y;
-width: 100%;
-max-width: 100vw;
-/* Rich dark grain texture */
-background-image:
-radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,229,160,0.07) 0%, transparent 60%),
-radial-gradient(ellipse 60% 40% at 80% 80%, rgba(59,139,255,0.04) 0%, transparent 60%);
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    touch-action: pan-y;
+    width: 100%;
+    max-width: 100vw;
+    /* Rich dark grain texture */
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,229,160,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(59,139,255,0.04) 0%, transparent 60%);
+  }
 
-.phone-shell {
-width: 100%;
-min-height: 100vh;
-position: relative;
-z-index: 1;
-}
+  .phone-shell {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
 
-.scroll-inner { width: 100%; }
+  .scroll-inner { width: 100%; }
 
-.app-content {
-max-width: 520px;
-margin: 0 auto;
-padding: 44px 20px 80px;
-display: flex;
-flex-direction: column;
-gap: 14px;
-}
+  .app-content {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 44px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
 
-/* ── HEADER ── */
-.header {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 14px;
-padding-bottom: 8px;
-}
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 8px;
+  }
 
-.header-icon {
-width: 80px;
-height: 80px;
-display: flex;
-align-items: center;
-justify-content: center;
-background: rgba(255,255,255,0.03);
-border-radius: 22px;
-border: 1px solid var(–glass-border);
-box-shadow:
-0 8px 32px rgba(0,0,0,0.4),
-inset 0 1px 0 rgba(255,255,255,0.07);
-backdrop-filter: blur(20px);
-}
+  .header-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border-radius: 22px;
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+  }
 
-.header-left { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .header-left { display: flex; flex-direction: column; align-items: center; gap: 5px; }
 
-.app-title {
-font-size: 28px;
-font-weight: 700;
-color: var(–text);
-letter-spacing: -0.8px;
-line-height: 1;
-text-align: center;
-}
+  .app-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.8px;
+    line-height: 1;
+    text-align: center;
+  }
 
-.app-subtitle {
-font-size: 12px;
-color: var(–text2);
-font-weight: 500;
-text-align: center;
-letter-spacing: 0.3px;
-}
+  .app-subtitle {
+    font-size: 12px;
+    color: var(--text2);
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
 
-/* ── GLASS CARD BASE ── */
-.glass-card {
-background: var(–glass);
-border-radius: var(–radius);
-border: 1px solid var(–glass-border);
-backdrop-filter: blur(24px);
--webkit-backdrop-filter: blur(24px);
-box-shadow:
-0 2px 0 rgba(255,255,255,0.05) inset,
-0 20px 60px rgba(0,0,0,0.35),
-0 1px 0 rgba(255,255,255,0.04);
-position: relative;
-overflow: hidden;
-}
+  /* ── GLASS CARD BASE ── */
+  .glass-card {
+    background: var(--glass);
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.05) inset,
+      0 20px 60px rgba(0,0,0,0.35),
+      0 1px 0 rgba(255,255,255,0.04);
+    position: relative;
+    overflow: hidden;
+  }
 
-/* Subtle top highlight on cards */
-.glass-card::before {
-content: ‘’;
-position: absolute;
-top: 0; left: 16px; right: 16px;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-}
+  /* Subtle top highlight on cards */
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 16px; right: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  }
 
-/* ── INPUT CARD ── */
-.input-card {
-padding: 22px 20px 18px;
-}
+  /* ── INPUT CARD ── */
+  .input-card {
+    padding: 22px 20px 18px;
+  }
 
-.card-label {
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 1.4px;
-text-transform: uppercase;
-color: var(–text3);
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 14px;
-}
+  .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
 
-.format-badge {
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 0.6px;
-padding: 4px 12px;
-border-radius: 20px;
-background: rgba(0,229,160,0.1);
-color: var(–accent);
-border: 1px solid rgba(0,229,160,0.22);
-transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
-opacity: 0;
-transform: scale(0.75) translateY(4px);
-box-shadow: 0 0 12px rgba(0,229,160,0.12);
-}
-.format-badge.visible {
-opacity: 1;
-transform: scale(1) translateY(0);
-}
+  .format-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(0,229,160,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.22);
+    transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    opacity: 0;
+    transform: scale(0.75) translateY(4px);
+    box-shadow: 0 0 12px rgba(0,229,160,0.12);
+  }
+  .format-badge.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 
-.input-row {
-display: flex;
-align-items: center;
-gap: 10px;
-}
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-.code-input {
-flex: 1;
-background: transparent;
-border: none;
-outline: none;
-font-family: ‘JetBrains Mono’, monospace;
-font-size: 38px;
-font-weight: 800;
-color: var(–text);
-caret-color: var(–accent);
-text-transform: uppercase;
-letter-spacing: 3px;
-min-width: 0;
-}
+  .code-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--text);
+    caret-color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    min-width: 0;
+  }
 
-.code-input::placeholder {
-color: #4e5d78;
-font-weight: 400;
-letter-spacing: 0;
-font-size: 22px;
-}
+  .code-input::placeholder {
+    color: #4e5d78;
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 22px;
+  }
 
-.clear-btn {
-background: rgba(255,255,255,0.05);
-border: 1px solid var(–glass-border);
-cursor: pointer;
-color: var(–text3);
-width: 32px;
-height: 32px;
-border-radius: 50%;
-flex-shrink: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-transition: all 0.2s ease;
-opacity: 0;
-pointer-events: none;
-}
-.clear-btn.visible { opacity: 1; pointer-events: all; }
-.clear-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.1); }
+  .clear-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    color: var(--text3);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .clear-btn.visible { opacity: 1; pointer-events: all; }
+  .clear-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.1); }
 
-.divider {
-height: 1px;
-background: linear-gradient(90deg, transparent, var(–glass-border-strong), transparent);
-margin: 16px 0 14px;
-}
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border-strong), transparent);
+    margin: 16px 0 14px;
+  }
 
-.format-hints {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-}
+  .format-hints {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 
-.hint-item {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 3px;
-cursor: pointer;
-padding: 8px 4px;
-border-radius: var(–radius-xs);
-transition: background 0.2s;
-}
-.hint-item:active { background: var(–glass-hover); }
+  .hint-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 8px 4px;
+    border-radius: var(--radius-xs);
+    transition: background 0.2s;
+  }
+  .hint-item:active { background: var(--glass-hover); }
 
-.hint-code {
-font-family: ‘JetBrains Mono’, monospace;
-font-size: 14px;
-font-weight: 700;
-color: var(–accent);
-letter-spacing: 1px;
-}
-.hint-label {
-font-size: 10px;
-color: var(–text3);
-font-weight: 500;
-}
+  .hint-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .hint-label {
+    font-size: 10px;
+    color: var(--text3);
+    font-weight: 500;
+  }
 
-/* ── RESULT CARD ── */
-.result-card {
-border-radius: var(–radius);
-border: 1px solid var(–glass-border);
-overflow: hidden;
-transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-transform-origin: top center;
-background: var(–glass);
-box-shadow:
-0 2px 0 rgba(255,255,255,0.05) inset,
-0 0 0 1px rgba(0,229,160,0.08),
-0 24px 64px rgba(0,0,0,0.4);
-}
+  /* ── RESULT CARD ── */
+  .result-card {
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: top center;
+    background: var(--glass);
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.05) inset,
+      0 0 0 1px rgba(0,229,160,0.08),
+      0 24px 64px rgba(0,0,0,0.4);
+  }
 
-.result-card.hidden {
-opacity: 0;
-transform: scale(0.94) translateY(-10px);
-pointer-events: none;
-max-height: 0;
-overflow: hidden;
-border-width: 0;
-margin: 0;
-}
+  .result-card.hidden {
+    opacity: 0;
+    transform: scale(0.94) translateY(-10px);
+    pointer-events: none;
+    max-height: 0;
+    overflow: hidden;
+    border-width: 0;
+    margin: 0;
+  }
 
-.result-accent-bar {
-height: 2px;
-background: linear-gradient(90deg, transparent 0%, var(–accent) 30%, var(–accent2) 70%, transparent 100%);
-opacity: 0.8;
-}
+  .result-accent-bar {
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent2) 70%, transparent 100%);
+    opacity: 0.8;
+  }
 
-.result-body { padding: 22px 20px 20px; }
+  .result-body { padding: 22px 20px 20px; }
 
-.result-label {
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 1.4px;
-text-transform: uppercase;
-color: var(–text2);
-text-align: center;
-margin-bottom: 10px;
-}
+  .result-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text2);
+    text-align: center;
+    margin-bottom: 10px;
+  }
 
-.result-primary {
-font-family: ‘JetBrains Mono’, monospace;
-font-size: 54px;
-font-weight: 800;
-text-align: center;
-background: linear-gradient(135deg, #00e5a0 0%, #00c9ff 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-line-height: 1.05;
-letter-spacing: -2px;
-margin-bottom: 2px;
-filter: drop-shadow(0 0 20px rgba(0,229,160,0.3));
-transition: all 0.3s ease;
-}
+  .result-primary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 54px;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(135deg, #00e5a0 0%, #00c9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 2px;
+    filter: drop-shadow(0 0 20px rgba(0,229,160,0.3));
+    transition: all 0.3s ease;
+  }
 
-.units-row {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-border-radius: var(–radius-xs);
-overflow: hidden;
-margin: 18px 0 16px;
-background: rgba(255,255,255,0.02);
-border: 1px solid var(–glass-border);
-}
+  .units-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    margin: 18px 0 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--glass-border);
+  }
 
-.unit-cell {
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 12px 4px;
-gap: 4px;
-}
-.unit-cell + .unit-cell {
-border-left: 1px solid var(–glass-border);
-}
-.unit-name {
-font-size: 9px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 1px;
-color: var(–text2);
-}
-.unit-value {
-font-family: ‘JetBrains Mono’, monospace;
-font-size: 13px;
-font-weight: 700;
-color: var(–text);
-}
-.unit-value.dim { color: var(–text3); }
+  .unit-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 4px;
+    gap: 4px;
+  }
+  .unit-cell + .unit-cell {
+    border-left: 1px solid var(--glass-border);
+  }
+  .unit-name {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text2);
+  }
+  .unit-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .unit-value.dim { color: var(--text3); }
 
-.result-meta {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 8px;
-}
+  .result-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
 
-.meta-chip {
-display: flex;
-align-items: center;
-gap: 7px;
-padding: 8px 12px;
-border-radius: var(–radius-xs);
-background: rgba(255,255,255,0.03);
-border: 1px solid var(–glass-border);
-flex: 1;
-}
-.meta-chip-icon { font-size: 14px; flex-shrink: 0; }
-.meta-chip-info { display: flex; flex-direction: column; }
-.meta-chip-label { font-size: 9px; color: var(–text2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-.meta-chip-value { font-size: 13px; font-weight: 700; }
-.meta-chip-value.orange { color: var(–warn); }
-.meta-chip-value.purple { color: #bf5af2; }
+  .meta-chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border-radius: var(--radius-xs);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border);
+    flex: 1;
+  }
+  .meta-chip-icon { font-size: 14px; flex-shrink: 0; }
+  .meta-chip-info { display: flex; flex-direction: column; }
+  .meta-chip-label { font-size: 9px; color: var(--text2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+  .meta-chip-value { font-size: 13px; font-weight: 700; }
+  .meta-chip-value.orange { color: var(--warn); }
+  .meta-chip-value.purple { color: #bf5af2; }
 
-.copy-btn {
-display: flex;
-align-items: center;
-gap: 6px;
-padding: 10px 16px;
-border-radius: 30px;
-border: 1px solid rgba(0,229,160,0.25);
-cursor: pointer;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-font-weight: 600;
-background: rgba(0,229,160,0.08);
-color: var(–accent);
-transition: all 0.2s ease;
-white-space: nowrap;
-box-shadow: 0 0 16px rgba(0,229,160,0.08);
-}
-.copy-btn:active { transform: scale(0.96); background: rgba(0,229,160,0.15); }
-.copy-btn.copied { background: rgba(0,229,160,0.15); color: #fff; border-color: rgba(0,229,160,0.4); }
+  .copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-radius: 30px;
+    border: 1px solid rgba(0,229,160,0.25);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(0,229,160,0.08);
+    color: var(--accent);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 0 16px rgba(0,229,160,0.08);
+  }
+  .copy-btn:active { transform: scale(0.96); background: rgba(0,229,160,0.15); }
+  .copy-btn.copied { background: rgba(0,229,160,0.15); color: #fff; border-color: rgba(0,229,160,0.4); }
 
-/* ── ERROR BANNER ── */
-.error-banner {
-background: rgba(255,179,64,0.06);
-border: 1px solid rgba(255,179,64,0.18);
-border-radius: var(–radius-sm);
-padding: 14px 16px;
-display: flex;
-align-items: flex-start;
-gap: 10px;
-font-size: 12.5px;
-color: var(–text2);
-line-height: 1.55;
-backdrop-filter: blur(12px);
-}
-.error-banner.hidden { display: none; }
-.error-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  /* ── ERROR BANNER ── */
+  .error-banner {
+    background: rgba(255,179,64,0.06);
+    border: 1px solid rgba(255,179,64,0.18);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.55;
+    backdrop-filter: blur(12px);
+  }
+  .error-banner.hidden { display: none; }
+  .error-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
-/* ── HISTORY ── */
-.history-section { display: flex; flex-direction: column; gap: 10px; }
+  /* ── HISTORY ── */
+  .history-section { display: flex; flex-direction: column; gap: 10px; }
 
-.history-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 0 2px;
-}
+  .history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2px;
+  }
 
-.history-title {
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 1.4px;
-text-transform: uppercase;
-color: var(–text3);
-display: flex;
-align-items: center;
-gap: 6px;
-}
+  .history-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-.clear-history-btn {
-background: none;
-border: none;
-cursor: pointer;
-font-size: 12px;
-font-weight: 600;
-color: rgba(255,69,58,0.6);
-font-family: ‘DM Sans’, sans-serif;
-transition: color 0.2s;
-padding: 4px 0;
-}
-.clear-history-btn:active { color: var(–danger); }
+  .clear-history-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,69,58,0.6);
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.2s;
+    padding: 4px 0;
+  }
+  .clear-history-btn:active { color: var(--danger); }
 
-.history-list {
-background: var(–glass);
-border-radius: var(–radius);
-overflow: hidden;
-border: 1px solid var(–glass-border);
-backdrop-filter: blur(24px);
-box-shadow: 0 16px 48px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-}
+  .history-list {
+    background: var(--glass);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
 
-.history-row {
-display: flex;
-align-items: center;
-padding: 13px 16px;
-gap: 13px;
-cursor: pointer;
-transition: background 0.15s;
-border-bottom: 1px solid var(–glass-border);
-}
-.history-row:last-child { border-bottom: none; }
-.history-row:active { background: var(–glass-hover); }
+  .history-row {
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    gap: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .history-row:last-child { border-bottom: none; }
+  .history-row:active { background: var(--glass-hover); }
 
-.history-code-badge {
-width: 42px;
-height: 42px;
-background: rgba(0,229,160,0.07);
-border-radius: var(–radius-xs);
-display: flex;
-align-items: center;
-justify-content: center;
-font-family: ‘JetBrains Mono’, monospace;
-font-size: 11px;
-font-weight: 700;
-color: var(–accent);
-flex-shrink: 0;
-border: 1px solid rgba(0,229,160,0.12);
-}
+  .history-code-badge {
+    width: 42px;
+    height: 42px;
+    background: rgba(0,229,160,0.07);
+    border-radius: var(--radius-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    border: 1px solid rgba(0,229,160,0.12);
+  }
 
-.history-info { flex: 1; min-width: 0; }
-.history-result { font-size: 15px; font-weight: 600; color: var(–text); }
-.history-time { font-size: 11px; color: var(–text2); margin-top: 2px; }
-.history-arrow { color: var(–text2); font-size: 12px; opacity: 0.5; }
+  .history-info { flex: 1; min-width: 0; }
+  .history-result { font-size: 15px; font-weight: 600; color: var(--text); }
+  .history-time { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .history-arrow { color: var(--text2); font-size: 12px; opacity: 0.5; }
 
-/* ── SCANLINE ── */
-.scanline {
-position: fixed;
-top: 0; left: 0; right: 0;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(0,229,160,0.25), transparent);
-animation: scan 6s linear infinite;
-pointer-events: none;
-z-index: 100;
-opacity: 0;
-}
-@keyframes scan {
-0%   { top: 0%;   opacity: 0; }
-4%   { opacity: 1; }
-96%  { opacity: 1; }
-100% { top: 100%; opacity: 0; }
-}
+  /* ── SCANLINE ── */
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,229,160,0.25), transparent);
+    animation: scan 6s linear infinite;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+  }
+  @keyframes scan {
+    0%   { top: 0%;   opacity: 0; }
+    4%   { opacity: 1; }
+    96%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
 
-/* ── ANIMATIONS ── */
-@keyframes resultPop {
-0%   { transform: scale(0.96); opacity: 0.6; }
-60%  { transform: scale(1.015); }
-100% { transform: scale(1); opacity: 1; }
-}
-.result-pop { animation: resultPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  /* ── ANIMATIONS ── */
+  @keyframes resultPop {
+    0%   { transform: scale(0.96); opacity: 0.6; }
+    60%  { transform: scale(1.015); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .result-pop { animation: resultPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-@keyframes fadeUp {
-from { opacity: 0; transform: translateY(10px); }
-to   { opacity: 1; transform: translateY(0); }
-}
-.app-content > * {
-animation: fadeUp 0.5s ease both;
-}
-.app-content > *:nth-child(1) { animation-delay: 0.05s; }
-.app-content > *:nth-child(2) { animation-delay: 0.12s; }
-.app-content > *:nth-child(3) { animation-delay: 0.18s; }
-.app-content > *:nth-child(4) { animation-delay: 0.22s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .app-content > * {
+    animation: fadeUp 0.5s ease both;
+  }
+  .app-content > *:nth-child(1) { animation-delay: 0.05s; }
+  .app-content > *:nth-child(2) { animation-delay: 0.12s; }
+  .app-content > *:nth-child(3) { animation-delay: 0.18s; }
+  .app-content > *:nth-child(4) { animation-delay: 0.22s; }
 </style>
 
 <script>
@@ -615,161 +614,159 @@ animation: fadeUp 0.5s ease both;
   <div class="scroll-inner">
     <div class="app-content">
 
-```
-  <!-- Header -->
-  <div class="header">
-    <div class="header-icon">
-      <svg width="54" height="54" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="chipGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#4da8e8"/>
-            <stop offset="100%" stop-color="#9b6fd4"/>
-          </linearGradient>
-        </defs>
-        <!-- Outer chip body -->
-        <rect x="22" y="22" width="56" height="56" rx="10" ry="10" stroke="url(#chipGrad)" stroke-width="4" fill="none"/>
-        <!-- Inner chip body -->
-        <rect x="32" y="32" width="36" height="36" rx="6" ry="6" stroke="url(#chipGrad)" stroke-width="3" fill="none"/>
-        <!-- Top pins -->
-        <line x1="38" y1="22" x2="38" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="50" y1="22" x2="50" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="62" y1="22" x2="62" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <!-- Bottom pins -->
-        <line x1="38" y1="78" x2="38" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="50" y1="78" x2="50" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="62" y1="78" x2="62" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <!-- Left pins -->
-        <line x1="22" y1="38" x2="10" y2="38" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="22" y1="50" x2="10" y2="50" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="22" y1="62" x2="10" y2="62" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <!-- Right pins -->
-        <line x1="78" y1="38" x2="90" y2="38" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="78" y1="50" x2="90" y2="50" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="78" y1="62" x2="90" y2="62" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
-        <!-- M text in centre -->
-        <text x="50" y="50" text-anchor="middle" dominant-baseline="central"
-          font-family="DM Sans, sans-serif" font-weight="700" font-size="30"
-          fill="url(#chipGrad)">M</text>
-      </svg>
-    </div>
-    <div class="header-left">
-      <div class="app-title">MF SMD Lens</div>
-      <div class="app-subtitle">Resistor Code Decoder</div>
-    </div>
-  </div>
-
-  <!-- Input Card -->
-  <div class="input-card glass-card">
-    <div class="card-label">
-      <span>Resistor Code</span>
-      <span class="format-badge" id="formatBadge">3-Digit</span>
-    </div>
-    <div class="input-row">
-      <input
-        class="code-input"
-        type="text"
-        id="codeInput"
-        placeholder="e.g. 472"
-        maxlength="4"
-        autocomplete="off"
-        autocorrect="off"
-        spellcheck="false"
-      />
-      <button class="clear-btn" id="clearBtn" onclick="clearInput()">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
-        </svg>
-      </button>
-    </div>
-    <div class="divider"></div>
-    <div class="format-hints">
-      <div class="hint-item" onclick="setInput('472')">
-        <span class="hint-code">472</span>
-        <span class="hint-label">3-Digit</span>
-      </div>
-      <div class="hint-item" onclick="setInput('1001')">
-        <span class="hint-code">1001</span>
-        <span class="hint-label">4-Digit</span>
-      </div>
-      <div class="hint-item" onclick="setInput('01C')">
-        <span class="hint-code">01C</span>
-        <span class="hint-label">EIA-96</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Result Card -->
-  <div class="result-card glass-card hidden" id="resultCard">
-    <div class="result-accent-bar"></div>
-    <div class="result-body">
-      <div class="result-label">Resistance</div>
-      <div class="result-primary" id="resultPrimary">4.7 kΩ</div>
-
-      <div class="units-row">
-        <div class="unit-cell">
-          <span class="unit-name">Ohms</span>
-          <span class="unit-value" id="unitOhms">4700 Ω</span>
-        </div>
-        <div class="unit-cell">
-          <span class="unit-name">Kilohms</span>
-          <span class="unit-value" id="unitKilo">—</span>
-        </div>
-        <div class="unit-cell">
-          <span class="unit-name">Megohms</span>
-          <span class="unit-value" id="unitMega">—</span>
-        </div>
-      </div>
-
-      <div class="result-meta">
-        <div class="meta-chip">
-          <span class="meta-chip-icon">±</span>
-          <div class="meta-chip-info">
-            <span class="meta-chip-label">Tolerance</span>
-            <span class="meta-chip-value orange" id="metaTolerance">±5%</span>
-          </div>
-        </div>
-        <div class="meta-chip">
-          <span class="meta-chip-icon" style="font-size:12px">⬡</span>
-          <div class="meta-chip-info">
-            <span class="meta-chip-label">Format</span>
-            <span class="meta-chip-value purple" id="metaFormat">3-Digit</span>
-          </div>
-        </div>
-        <button class="copy-btn" id="copyBtn" onclick="copyResult()">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor">
-            <path d="M4 1a1 1 0 011-1h5a1 1 0 011 1v1h1a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1h0V1zm1 0v2H4v9h8V3h-1V1H5z"/>
+      <!-- Header -->
+      <div class="header">
+        <div class="header-icon">
+          <svg width="54" height="54" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="chipGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#4da8e8"/>
+                <stop offset="100%" stop-color="#9b6fd4"/>
+              </linearGradient>
+            </defs>
+            <!-- Outer chip body -->
+            <rect x="22" y="22" width="56" height="56" rx="10" ry="10" stroke="url(#chipGrad)" stroke-width="4" fill="none"/>
+            <!-- Inner chip body -->
+            <rect x="32" y="32" width="36" height="36" rx="6" ry="6" stroke="url(#chipGrad)" stroke-width="3" fill="none"/>
+            <!-- Top pins -->
+            <line x1="38" y1="22" x2="38" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="50" y1="22" x2="50" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="62" y1="22" x2="62" y2="10" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Bottom pins -->
+            <line x1="38" y1="78" x2="38" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="50" y1="78" x2="50" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="62" y1="78" x2="62" y2="90" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Left pins -->
+            <line x1="22" y1="38" x2="10" y2="38" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="22" y1="50" x2="10" y2="50" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="22" y1="62" x2="10" y2="62" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Right pins -->
+            <line x1="78" y1="38" x2="90" y2="38" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="78" y1="50" x2="90" y2="50" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="78" y1="62" x2="90" y2="62" stroke="url(#chipGrad)" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- M text in centre -->
+            <text x="50" y="50" text-anchor="middle" dominant-baseline="central"
+              font-family="DM Sans, sans-serif" font-weight="700" font-size="30"
+              fill="url(#chipGrad)">M</text>
           </svg>
-          Copy
-        </button>
+        </div>
+        <div class="header-left">
+          <div class="app-title">MF SMD Lens</div>
+          <div class="app-subtitle">Resistor Code Decoder</div>
+        </div>
       </div>
+
+      <!-- Input Card -->
+      <div class="input-card glass-card">
+        <div class="card-label">
+          <span>Resistor Code</span>
+          <span class="format-badge" id="formatBadge">3-Digit</span>
+        </div>
+        <div class="input-row">
+          <input
+            class="code-input"
+            type="text"
+            id="codeInput"
+            placeholder="e.g. 472"
+            maxlength="4"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+          />
+          <button class="clear-btn" id="clearBtn" onclick="clearInput()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="divider"></div>
+        <div class="format-hints">
+          <div class="hint-item" onclick="setInput('472')">
+            <span class="hint-code">472</span>
+            <span class="hint-label">3-Digit</span>
+          </div>
+          <div class="hint-item" onclick="setInput('1001')">
+            <span class="hint-code">1001</span>
+            <span class="hint-label">4-Digit</span>
+          </div>
+          <div class="hint-item" onclick="setInput('01C')">
+            <span class="hint-code">01C</span>
+            <span class="hint-label">EIA-96</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div class="result-card glass-card hidden" id="resultCard">
+        <div class="result-accent-bar"></div>
+        <div class="result-body">
+          <div class="result-label">Resistance</div>
+          <div class="result-primary" id="resultPrimary">4.7 kΩ</div>
+
+          <div class="units-row">
+            <div class="unit-cell">
+              <span class="unit-name">Ohms</span>
+              <span class="unit-value" id="unitOhms">4700 Ω</span>
+            </div>
+            <div class="unit-cell">
+              <span class="unit-name">Kilohms</span>
+              <span class="unit-value" id="unitKilo">—</span>
+            </div>
+            <div class="unit-cell">
+              <span class="unit-name">Megohms</span>
+              <span class="unit-value" id="unitMega">—</span>
+            </div>
+          </div>
+
+          <div class="result-meta">
+            <div class="meta-chip">
+              <span class="meta-chip-icon">±</span>
+              <div class="meta-chip-info">
+                <span class="meta-chip-label">Tolerance</span>
+                <span class="meta-chip-value orange" id="metaTolerance">±5%</span>
+              </div>
+            </div>
+            <div class="meta-chip">
+              <span class="meta-chip-icon" style="font-size:12px">⬡</span>
+              <div class="meta-chip-info">
+                <span class="meta-chip-label">Format</span>
+                <span class="meta-chip-value purple" id="metaFormat">3-Digit</span>
+              </div>
+            </div>
+            <button class="copy-btn" id="copyBtn" onclick="copyResult()">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor">
+                <path d="M4 1a1 1 0 011-1h5a1 1 0 011 1v1h1a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1h0V1zm1 0v2H4v9h8V3h-1V1H5z"/>
+              </svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Banner -->
+      <div class="error-banner hidden" id="errorBanner">
+        <span class="error-icon">⚠️</span>
+        <span id="errorText">Invalid code format.</span>
+      </div>
+
+      <!-- History -->
+      <div class="history-section" id="historySection" style="display:none">
+        <div class="history-header">
+          <span class="history-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Recent
+          </span>
+          <button class="clear-history-btn" onclick="clearHistory()">Clear</button>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+
     </div>
   </div>
-
-  <!-- Error Banner -->
-  <div class="error-banner hidden" id="errorBanner">
-    <span class="error-icon">⚠️</span>
-    <span id="errorText">Invalid code format.</span>
-  </div>
-
-  <!-- History -->
-  <div class="history-section" id="historySection" style="display:none">
-    <div class="history-header">
-      <span class="history-title">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-        </svg>
-        Recent
-      </span>
-      <button class="clear-history-btn" onclick="clearHistory()">Clear</button>
-    </div>
-    <div class="history-list" id="historyList"></div>
-  </div>
-
 </div>
-```
 
-  </div>
-</div>
 
 <script>
 // ─── EIA-96 LOOKUP TABLE ───────────────────────────────────────────────────
