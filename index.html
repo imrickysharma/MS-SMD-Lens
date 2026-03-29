@@ -1,0 +1,1431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Clock Academy</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Clock Academy" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+  <link rel="shortcut icon" href="icon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Mono:wght@400;500&family=Jura:wght@300;400&family=Sen:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cs: min(78vw, 400px);
+      --bg: #f5f0e8;
+      --ink: #1a1612;
+      --accent: #c84b2f;
+      --gold: #FD5B04;
+      --face: #fffef9;
+      --soft: #e8e0d0;
+      --muted: #9a8f80;
+      --correct: #2d7a4f;
+      --wrong: #c84b2f;
+      --shadow: rgba(26,22,18,0.15);
+      --page-bg: #f5f0e8;
+      --page-text: #1a1612;
+      --page-muted: #9a8f80;
+      --panel-bg: #1a1612;
+      --panel-fg: #fffef9;
+      --surface-bg: #fffef9;
+      --surface-ring: #e8e0d0;
+      --surface-shadow: rgba(26,22,18,0.15);
+      --line: #1a1612;
+      --subline: #9a8f80;
+      --texture-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a1612' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    :root[data-theme-resolved="dark"] {
+      --bg: #110f0d;
+      --face: #16120f;
+      --soft: #2a231c;
+      --muted: #a59686;
+      --shadow: rgba(0,0,0,0.52);
+      --page-bg: #110f0d;
+      --page-text: #f4ede3;
+      --page-muted: #a59686;
+      --panel-bg: #211b16;
+      --panel-fg: #fff9f0;
+      --surface-bg: #16120f;
+      --surface-ring: #2a231c;
+      --surface-shadow: rgba(0,0,0,0.52);
+      --line: #f4ede3;
+      --subline: #a59686;
+      --texture-image: none;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: manipulation;
+    }
+
+    body {
+      min-height: 100svh;
+      height: 100svh;
+      font-family: 'Fraunces', Georgia, serif;
+      background: var(--page-bg);
+      color: var(--page-text);
+      position: fixed;
+      inset: 0;
+      padding: 20px;
+      overflow: hidden;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    /* Subtle background texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: var(--texture-image);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 560px);
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .top-row {
+      position: relative;
+      width: min(100%, 460px);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app-topbar {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      z-index: 20;
+    }
+    .utility-menu {
+      position: relative;
+    }
+    .utility-trigger {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--page-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+    :root[data-theme-resolved="dark"] .utility-trigger {
+      background: transparent;
+    }
+    .utility-trigger:hover {
+      transform: translateY(-1px);
+      background: transparent;
+    }
+    :root[data-theme-resolved="dark"] .utility-trigger:hover {
+      background: transparent;
+    }
+    .utility-trigger svg {
+      width: 24px;
+      height: 24px;
+    }
+    .utility-trigger .trigger-icon {
+      display: none;
+    }
+    .utility-trigger .trigger-icon-light,
+    .utility-trigger .trigger-icon-dark {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .utility-trigger .trigger-icon-system {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .utility-trigger[data-theme-icon="light"] .trigger-icon-light,
+    .utility-trigger[data-theme-icon="dark"] .trigger-icon-dark,
+    .utility-trigger[data-theme-icon="system"] .trigger-icon-system {
+      display: block;
+    }
+    .utility-panel {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 188px;
+      padding: 10px;
+      border-radius: 18px;
+      background: rgba(255,254,252,0.92);
+      border: 1px solid rgba(26,22,18,0.1);
+      box-shadow: 0 16px 40px rgba(26,22,18,0.16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px) scale(0.98);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    :root[data-theme-resolved="dark"] .utility-panel {
+      background: rgba(27,23,19,0.95);
+      border-color: rgba(255,249,240,0.08);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.42);
+    }
+    .utility-menu.open .utility-panel {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+    .utility-section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--page-muted);
+      padding: 2px 4px 8px;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .header-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--page-muted);
+      margin-bottom: 6px;
+    }
+    .header-title {
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--page-text);
+    }
+    .header-title span {
+      color: var(--accent);
+    }
+
+    /* ── Score strip ── */
+    .score-strip {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 0;
+      background: var(--panel-bg);
+      border-radius: 100px;
+      padding: 10px 28px;
+    }
+    .score-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .score-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .score-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--panel-fg);
+    }
+    .score-value.correct { color: #ffffff; }
+    .score-value.streak { color: #ffffff; }
+
+    /* ── Challenge card ── */
+    .challenge-card {
+      background: var(--panel-bg);
+      color: var(--panel-fg);
+      border-radius: 20px;
+      padding: 0 0 0 20px;
+      margin-bottom: 24px;
+      width: 100%;
+      max-width: 460px;
+      min-height: 114px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 108px;
+      align-items: center;
+      overflow: hidden;
+    }
+    .challenge-display {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 18px 26px 18px 8px;
+    }
+    .challenge-time {
+      -webkit-appearance: none;
+      appearance: none;
+      font-family: 'Jura', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      max-width: 100%;
+      font-size: 4.2rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: inherit;
+      padding: 0;
+      text-align: center;
+      white-space: nowrap;
+    }
+    #targetTimeText {
+      display: inline-block;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: 1;
+    }
+    .challenge-time.seconds-mode {
+      letter-spacing: -0.045em;
+      transform: none;
+    }
+    .challenge-time:hover {
+      opacity: 0.92;
+    }
+    .challenge-actions {
+      width: 108px;
+      min-height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      align-self: stretch;
+    }
+    .challenge-actions .pill-btn {
+      width: 100%;
+      height: auto;
+      min-width: 0;
+      min-height: 46px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    @media (max-width: 640px) {
+      .challenge-card {
+        min-height: 102px;
+        grid-template-columns: minmax(0, 1fr) 92px;
+        padding: 0 0 0 16px;
+      }
+      .challenge-display {
+        padding: 16px 18px 16px 4px;
+      }
+      .challenge-actions .pill-btn {
+        min-height: 42px;
+      }
+      .challenge-time {
+        font-size: 3.35rem;
+      }
+      .challenge-time.seconds-mode {
+        letter-spacing: -0.05em;
+        transform: none;
+      }
+    }
+    .pill-btn {
+      cursor: pointer;
+      background: transparent;
+      transition: none;
+    }
+    .pill-btn:hover { transform: none; }
+    .pill-btn:active { transform: none; }
+    .show-toggle {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 34%),
+        linear-gradient(180deg, #3b362f 0%, #27221d 48%, #1a1612 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.20),
+        inset 0 -1px 0 rgba(0,0,0,0.52),
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 8px 16px rgba(0,0,0,0.16),
+        0 2px 4px rgba(0,0,0,0.18);
+    }
+    .show-fill {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(229,220,205,0.98) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.95),
+        inset 0 -1px 0 rgba(198,187,169,0.38),
+        0 8px 16px rgba(0,0,0,0.12);
+      transform: translateY(-120%);
+      opacity: 0;
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+    }
+    .show-value {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      text-align: center;
+      padding: 0 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+      color: rgba(26,22,18,0);
+      opacity: 0;
+      transition: color 0.26s ease, opacity 0.2s ease;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .show-btn-label {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      color: #f6f1e8;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.12);
+      transform: translateY(2px);
+      transition: opacity 0.18s ease, transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .pill-btn.show-active .show-value {
+      color: var(--ink);
+      opacity: 1;
+    }
+    .pill-btn.show-active .show-btn-label {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .pill-btn.show-active .show-fill {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ── Difficulty pills ── */
+    .difficulty-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .theme-btn,
+    .diff-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1.5px solid transparent;
+      background: transparent;
+      color: var(--page-text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      min-height: 46px;
+    }
+    .theme-btn.active,
+    .diff-btn.active {
+      background: var(--panel-bg);
+      border-color: var(--panel-bg);
+      color: var(--panel-fg);
+    }
+    :root[data-theme-resolved="dark"] .theme-btn.active,
+    :root[data-theme-resolved="dark"] .diff-btn.active {
+      background: #fff9f0;
+      border-color: #fff9f0;
+      color: #1a1612;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    }
+    .theme-btn:not(.active):hover,
+    .diff-btn:not(.active):hover {
+      border-color: var(--page-muted);
+      color: var(--page-text);
+    }
+    .theme-btn {
+      width: 100%;
+      justify-content: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+    .theme-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: currentColor;
+    }
+    .theme-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── Clock ── */
+    .clock-wrap {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .clock {
+      width: var(--cs);
+      height: var(--cs);
+      border-radius: 50%;
+      position: relative;
+      background: var(--surface-bg);
+      user-select: none;
+      touch-action: none;
+      box-shadow:
+        0 0 0 8px var(--page-bg),
+        0 0 0 10px var(--surface-ring),
+        0 12px 48px var(--surface-shadow),
+        inset 0 1px 3px rgba(255,255,255,0.8);
+    }
+
+    /* Outer ring */
+    .clock::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 3px solid var(--line);
+      pointer-events: none;
+    }
+
+    .number {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      margin-left: -15px;
+      margin-top: -15px;
+      left: 50%;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 2.3vw, 1.1rem);
+      color: var(--line);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .tick {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: 50% calc(var(--cs) * 0.45);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .tick.big {
+      width: 2.5px;
+      height: 14px;
+      background: var(--line);
+      margin-top: calc(var(--cs) * -0.45);
+      margin-left: -1.25px;
+    }
+    .tick.small {
+      width: 1.5px;
+      height: 7px;
+      background: var(--subline);
+      margin-top: calc(var(--cs) * -0.45);
+      margin-left: -0.75px;
+      opacity: 0.6;
+    }
+    .tick.fifth {
+      width: 2px;
+      height: 10px;
+      background: var(--subline);
+      margin-top: calc(var(--cs) * -0.45);
+      margin-left: -1px;
+      opacity: 0.8;
+    }
+
+    .hand {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      transform-origin: 50% 100%;
+      transform: translate(-50%, -100%) rotate(0deg);
+      border-radius: 999px;
+      cursor: grab;
+      touch-action: none;
+      will-change: transform;
+      backface-visibility: hidden;
+      transition: filter 0.15s;
+    }
+    .hand::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -22px;
+      width: 44px;
+      height: calc(100% + 34px);
+      transform: translateX(-50%);
+      background: transparent;
+    }
+    .hand.dragging {
+      transition: none;
+      filter: none;
+    }
+    .hand:active { cursor: grabbing; }
+    .hand:hover { filter: brightness(1.3); }
+
+    .hour-hand {
+      width: 9px;
+      height: calc(var(--cs) * 0.24);
+      background: var(--line);
+      z-index: 6;
+      border-radius: 999px 999px 4px 4px;
+    }
+    .minute-hand {
+      width: 5px;
+      height: calc(var(--cs) * 0.36);
+      background: var(--line);
+      z-index: 7;
+      border-radius: 999px 999px 3px 3px;
+    }
+    .second-hand {
+      width: 2px;
+      height: calc(var(--cs) * 0.40);
+      background: var(--accent);
+      z-index: 8;
+      display: none;
+    }
+    /* second hand counterbalance tail */
+    .second-hand::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 0 0 2px 2px;
+    }
+
+    /* Center hint button — invisible but clickable, dot drawn via ::before */
+    .center-hint-btn {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      min-height: 28px;
+      transform: translate(-50%, -50%);
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      color: transparent;
+      cursor: default;
+      z-index: 12;
+      padding: 0;
+      box-shadow: none;
+    }
+    /* The visible ink dot */
+    .center-hint-btn::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      transform: translate(-50%, -50%);
+      background: var(--line);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .center-hint-btn:active {
+      transform: translate(-50%, -50%) scale(0.92);
+      box-shadow: none;
+    }
+
+    /* ── Hint arc (ghost hand) ── */
+
+    /* ── Bottom controls ── */
+    .bottom-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .check-btn {
+      font-family: 'Sen', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      background: var(--panel-bg);
+      color: var(--panel-fg);
+      border: 2px solid var(--panel-bg);
+      border-radius: 100px;
+      padding: 14px 36px;
+      cursor: pointer;
+      min-height: 52px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 4px 0 #0a0806;
+    }
+    .check-btn:hover {
+      background: #2e2820;
+      box-shadow: 0 4px 0 #0a0806, 0 0 0 3px var(--soft);
+    }
+    .check-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #0a0806;
+    }
+    .check-btn.correct {
+      background: #06C60A;
+      border-color: #049a08;
+      box-shadow: 0 4px 0 #049a08;
+      color: var(--page-text);
+    }
+    .check-btn.wrong {
+      background:
+        linear-gradient(180deg, #ff4a4a 0%, #FF1A1A 48%, #d80f0f 100%);
+      border-color: #c70d0d;
+      box-shadow: 0 4px 0 #b30c0c;
+    }
+
+    .hint-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--page-muted);
+      border: 1.5px solid var(--surface-ring);
+      border-radius: 100px;
+      padding: 14px 20px;
+      cursor: pointer;
+      min-height: 52px;
+      transition: all 0.15s;
+    }
+    .hint-btn:hover {
+      border-color: var(--page-muted);
+      color: var(--page-text);
+    }
+    .hint-btn:active { transform: scale(0.97); }
+
+    /* ── Seconds mode label ── */
+    .mode-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--page-muted);
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mode-label::before,
+    .mode-label::after {
+      content: '';
+      height: 1px;
+      width: 40px;
+      background: var(--surface-ring);
+    }
+
+
+
+    /* ── Hint overlay ghost ── */
+    .hint-hand {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: 50% 100%;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .hint-hand.visible { opacity: 0.28; }
+    .hint-hour {
+      width: 9px;
+      height: calc(var(--cs) * 0.24);
+      background: var(--accent);
+      border-radius: 999px 999px 4px 4px;
+    }
+    .hint-minute {
+      width: 5px;
+      height: calc(var(--cs) * 0.36);
+      background: var(--accent);
+      border-radius: 999px 999px 3px 3px;
+    }
+
+    @media (max-width: 420px) {
+      :root { --cs: min(86vw, 360px); }
+      .top-row {
+        width: 100%;
+        margin-bottom: 22px;
+      }
+      .app-topbar {
+        top: 2px;
+      }
+      .utility-trigger {
+        width: 28px;
+        height: 28px;
+        border-radius: 9px;
+      }
+      .utility-panel {
+        min-width: 176px;
+      }
+      .check-btn { padding: 12px 28px; }
+      .challenge-card { padding: 16px 22px; }
+      .score-strip { padding: 9px 20px; gap: 14px; }
+    }
+
+    /* Dragging state */
+    body.dragging { cursor: grabbing !important; }
+    body.dragging * { cursor: grabbing !important; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="top-row">
+      <div class="app-topbar">
+        <div class="utility-menu" id="utilityMenu">
+          <button class="utility-trigger" id="utilityTrigger" type="button" aria-label="Open theme options" aria-expanded="false" aria-controls="utilityPanel" data-theme-icon="system">
+            <svg class="trigger-icon trigger-icon-light" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v3"></path>
+              <path d="M12 19v3"></path>
+              <path d="M4.93 4.93l2.12 2.12"></path>
+              <path d="M16.95 16.95l2.12 2.12"></path>
+              <path d="M2 12h3"></path>
+              <path d="M19 12h3"></path>
+              <path d="M4.93 19.07l2.12-2.12"></path>
+              <path d="M16.95 7.05l2.12-2.12"></path>
+            </svg>
+            <svg class="trigger-icon trigger-icon-dark" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+            </svg>
+            <svg class="trigger-icon trigger-icon-system" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="14" rx="2"></rect>
+              <path d="M8 20h8"></path>
+              <path d="M12 18v2"></path>
+              <path d="M12 4v14"></path>
+            </svg>
+          </button>
+          <div class="utility-panel" id="utilityPanel">
+            <div class="utility-section-label">Theme</div>
+            <button class="theme-btn" data-theme-mode="light" type="button">
+              <span class="theme-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v3"></path>
+                  <path d="M12 19v3"></path>
+                  <path d="M4.93 4.93l2.12 2.12"></path>
+                  <path d="M16.95 16.95l2.12 2.12"></path>
+                  <path d="M2 12h3"></path>
+                  <path d="M19 12h3"></path>
+                  <path d="M4.93 19.07l2.12-2.12"></path>
+                  <path d="M16.95 7.05l2.12-2.12"></path>
+                </svg>
+              </span>
+              <span>Light</span>
+            </button>
+            <button class="theme-btn" data-theme-mode="dark" type="button">
+              <span class="theme-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+                </svg>
+              </span>
+              <span>Dark</span>
+            </button>
+            <button class="theme-btn active" data-theme-mode="system" type="button">
+              <span class="theme-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="4" width="18" height="14" rx="2"></rect>
+                  <path d="M8 20h8"></path>
+                  <path d="M12 18v2"></path>
+                  <path d="M12 4v14"></path>
+                </svg>
+              </span>
+              <span>System</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score strip -->
+      <div class="score-strip">
+        <div class="score-item">
+          <span class="score-label">Score</span>
+          <span class="score-value correct" id="scoreCorrect">0</span>
+        </div>
+        <div class="score-item">
+          <span class="score-label">Streak</span>
+          <span class="score-value streak" id="scoreStreak">0</span>
+        </div>
+        <div class="score-item">
+          <span class="score-label">Best</span>
+          <span class="score-value" id="scoreBest">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Difficulty -->
+    <div class="difficulty-row">
+      <button class="diff-btn active" data-diff="easy" type="button">Easy</button>
+      <button class="diff-btn" data-diff="medium" type="button">Medium</button>
+      <button class="diff-btn" data-diff="hard" type="button">Hard</button>
+    </div>
+
+    <!-- Challenge card -->
+    <div class="challenge-card">
+      <div class="challenge-display">
+        <button class="challenge-time" id="challengeTime" type="button" aria-label="Generate new time">
+          <span id="targetTimeText">12:00</span>
+        </button>
+      </div>
+      <div class="challenge-actions">
+        <button class="pill-btn show-toggle" id="showBtn" type="button" aria-label="Show current time">
+          <span class="show-fill" aria-hidden="true"></span>
+          <span class="show-btn-label" id="showButtonLabel">Show</span>
+          <span class="show-value" id="showValue">12:00</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Clock face -->
+    <div class="clock-wrap">
+      <section class="clock" id="clock" aria-label="Interactive analog clock">
+        <button class="center-hint-btn" id="centerHintBtn" type="button" aria-label="Show hint">?</button>
+      </section>
+    </div>
+
+    <!-- Bottom controls -->
+    <div class="bottom-controls">
+      <button class="check-btn" id="checkBtn" type="button">Check Answer</button>
+    </div>
+
+
+
+  </main>
+
+
+
+  <script>
+    // Remove accidental pasted text nodes (e.g., ```html / ```) that can shift layout.
+    Array.from(document.body.childNodes).forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) node.remove();
+    });
+
+    // Prevent double-tap zoom and pinch zoom shifting on iPhone Safari.
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (event) => {
+      const now = Date.now();
+      if (now - lastTouchEnd < 300) event.preventDefault();
+      lastTouchEnd = now;
+    }, { passive: false });
+
+    document.addEventListener('gesturestart', (event) => {
+      event.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('gesturechange', (event) => {
+      event.preventDefault();
+    }, { passive: false });
+
+    const THEME_STORAGE_KEY = 'clock-academy-theme-mode';
+    const themeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    function resolveTheme(mode) {
+      return mode === 'system' ? (themeQuery.matches ? 'dark' : 'light') : mode;
+    }
+
+    function updateThemeButtons(mode) {
+      document.querySelectorAll('.theme-btn').forEach((button) => {
+        button.classList.toggle('active', button.dataset.themeMode === mode);
+      });
+    }
+
+    function setUtilityMenu(open) {
+      utilityMenu.classList.toggle('open', open);
+      utilityTrigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function updateUtilityTriggerIcon(mode) {
+      utilityTrigger.dataset.themeIcon = mode;
+      utilityTrigger.setAttribute('aria-label', `Open ${mode} theme options`);
+    }
+
+    function applyTheme(mode, persist = true) {
+      const resolvedTheme = resolveTheme(mode);
+      document.documentElement.dataset.themeMode = mode;
+      document.documentElement.dataset.themeResolved = resolvedTheme;
+      document.documentElement.style.colorScheme = resolvedTheme;
+      updateThemeButtons(mode);
+      updateUtilityTriggerIcon(mode);
+      if (!persist) return;
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, mode);
+      } catch {}
+    }
+
+    /* ── Constants & state ── */
+    const DIFFICULTIES = {
+      easy:   { seconds: false },
+      medium: { seconds: false },
+      hard:   { seconds: true },
+    };
+
+    let diff = 'easy';
+    let targetHour = 12, targetMinute = 0, targetSecond = 0;
+    let currentMinutes = 0, currentSeconds = 0;
+    let dragMode = null;
+    let prevAngle = 0;
+    let dragCenter = null;
+    let pendingPoint = null;
+    let dragFrame = 0;
+    let activePointerId = null;
+    let dragElement = null;
+    let isSecondsMode = false;
+    let isShowActive = false;
+    let score = 0, streak = 0, bestStreak = 0;
+    let checkTimer = null, hintTimer = null;
+
+    /* ── DOM refs ── */
+    const clockEl        = document.getElementById('clock');
+    const checkBtn       = document.getElementById('checkBtn');
+    const challengeTimeEl = document.getElementById('challengeTime');
+    const showBtn        = document.getElementById('showBtn');
+    const showButtonLabelEl = document.getElementById('showButtonLabel');
+    const showValueEl    = document.getElementById('showValue');
+    const utilityMenu    = document.getElementById('utilityMenu');
+    const utilityTrigger = document.getElementById('utilityTrigger');
+    const centerHintBtn  = document.getElementById('centerHintBtn');
+
+    const scoreCorrectEl = document.getElementById('scoreCorrect');
+    const scoreStreakEl  = document.getElementById('scoreStreak');
+    const scoreBestEl    = document.getElementById('scoreBest');
+    const themeButtons   = document.querySelectorAll('.theme-btn');
+
+    /* ── Build clock face ── */
+    const hourHand   = document.createElement('div');
+    const minuteHand = document.createElement('div');
+    const secondHand = document.createElement('div');
+    const hintHour   = document.createElement('div');
+    const hintMinute = document.createElement('div');
+
+    hourHand.className   = 'hand hour-hand';
+    minuteHand.className = 'hand minute-hand';
+    secondHand.className = 'hand second-hand';
+    hintHour.className   = 'hint-hand hint-hour';
+    hintMinute.className = 'hint-hand hint-minute';
+
+    function buildClock() {
+      for (let i = 0; i < 60; i++) {
+        const tick = document.createElement('div');
+        if (i % 5 === 0) tick.className = 'tick big';
+        else if (i % 5 !== 0 && i % 5 !== 0) tick.className = 'tick small';
+        else tick.className = 'tick fifth';
+        tick.style.transform = `rotate(${i * 6}deg)`;
+        clockEl.appendChild(tick);
+      }
+      const r = 37;
+      for (let n = 1; n <= 12; n++) {
+        const angle = (n / 12) * Math.PI * 2;
+        const el = document.createElement('div');
+        el.className = 'number';
+        el.textContent = n;
+        el.style.left = `${50 + r * Math.sin(angle)}%`;
+        el.style.top  = `${50 - r * Math.cos(angle)}%`;
+        clockEl.appendChild(el);
+      }
+      clockEl.appendChild(hintHour);
+      clockEl.appendChild(hintMinute);
+      clockEl.appendChild(hourHand);
+      clockEl.appendChild(minuteHand);
+      clockEl.appendChild(secondHand);
+    }
+
+    /* ── Angle helpers ── */
+    function normAngle(a) { return ((a % 360) + 360) % 360; }
+    function shortDelta(prev, next) {
+      let d = normAngle(next) - normAngle(prev);
+      if (d > 180)  d -= 360;
+      if (d < -180) d += 360;
+      return d;
+    }
+
+    function setClockFromMinutes(m) {
+      currentMinutes = ((m % 720) + 720) % 720;
+      const hA = currentMinutes * 0.5;
+      const mA = (currentMinutes % 60) * 6;
+      hourHand.style.transform   = `translate(-50%, -100%) rotate(${hA}deg)`;
+      minuteHand.style.transform = `translate(-50%, -100%) rotate(${mA}deg)`;
+    }
+
+    function setClockFromSeconds(s) {
+      currentSeconds = ((s % 60) + 60) % 60;
+      const sA = currentSeconds * 6;
+      secondHand.style.transform = `translate(-50%, -100%) rotate(${sA}deg)`;
+    }
+
+    /* ── Pointer helpers ── */
+    function getPoint(e) {
+      if (e.touches?.length)        return { x: e.touches[0].clientX,        y: e.touches[0].clientY };
+      if (e.changedTouches?.length) return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+      return { x: e.clientX, y: e.clientY };
+    }
+
+    function pointerAngle(clientX, clientY) {
+      const r = dragCenter ? null : clockEl.getBoundingClientRect();
+      const cx = dragCenter ? dragCenter.x : r.left + r.width / 2;
+      const cy = dragCenter ? dragCenter.y : r.top + r.height / 2;
+      return normAngle(Math.atan2(clientX - cx, -(clientY - cy)) * (180 / Math.PI));
+    }
+
+    /* ── Drag logic ── */
+    function applyDragMove() {
+      dragFrame = 0;
+      if (!dragMode || !pendingPoint) return;
+      const { x, y } = pendingPoint;
+      pendingPoint = null;
+      const angle = pointerAngle(x, y);
+      const delta = shortDelta(prevAngle, angle);
+      prevAngle = angle;
+
+      if (dragMode === 'minute') {
+        currentMinutes += delta / 6;
+        setClockFromMinutes(currentMinutes);
+      } else if (dragMode === 'hour') {
+        currentMinutes += delta * 2;
+        setClockFromMinutes(currentMinutes);
+      } else if (dragMode === 'second') {
+        currentSeconds += delta / 6;
+        setClockFromSeconds(currentSeconds);
+      }
+      if (isShowActive) updateBadge();
+    }
+
+    function onMove(e) {
+      if (!dragMode) return;
+      if (activePointerId !== null && e.pointerId !== undefined && e.pointerId !== activePointerId) return;
+      e.preventDefault();
+      const sourceEvent = typeof e.getCoalescedEvents === 'function'
+        ? (e.getCoalescedEvents().slice(-1)[0] || e)
+        : e;
+      pendingPoint = getPoint(sourceEvent);
+      if (!dragFrame) dragFrame = requestAnimationFrame(applyDragMove);
+    }
+
+    function endDrag(e) {
+      if (activePointerId !== null && e?.pointerId !== undefined && e.pointerId !== activePointerId) return;
+      if (dragFrame) {
+        cancelAnimationFrame(dragFrame);
+        dragFrame = 0;
+      }
+      if (pendingPoint) applyDragMove();
+      if (dragElement) {
+        dragElement.classList.remove('dragging');
+        if (activePointerId !== null && typeof dragElement.releasePointerCapture === 'function') {
+          try { dragElement.releasePointerCapture(activePointerId); } catch {}
+        }
+      }
+      dragMode = null;
+      dragCenter = null;
+      pendingPoint = null;
+      activePointerId = null;
+      dragElement = null;
+      document.body.classList.remove('dragging');
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', endDrag);
+      window.removeEventListener('pointercancel', endDrag);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('mouseup', endDrag);
+      window.removeEventListener('touchend', endDrag);
+      window.removeEventListener('touchcancel', endDrag);
+    }
+
+    function startDrag(type, e) {
+      dragMode = type;
+      e.preventDefault();
+      document.body.classList.add('dragging');
+      dragElement = e.currentTarget || null;
+      activePointerId = e.pointerId ?? null;
+      if (dragElement) dragElement.classList.add('dragging');
+      if (dragElement && activePointerId !== null && typeof dragElement.setPointerCapture === 'function') {
+        try { dragElement.setPointerCapture(activePointerId); } catch {}
+      }
+      const rect = clockEl.getBoundingClientRect();
+      dragCenter = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      };
+      const { x, y } = getPoint(e);
+      prevAngle = pointerAngle(x, y);
+      if (activePointerId !== null) {
+        window.addEventListener('pointermove', onMove, { passive: false });
+        window.addEventListener('pointerup', endDrag);
+        window.addEventListener('pointercancel', endDrag);
+        return;
+      }
+      window.addEventListener('mousemove', onMove, { passive: false });
+      window.addEventListener('touchmove', onMove, { passive: false });
+      window.addEventListener('mouseup', endDrag);
+      window.addEventListener('touchend', endDrag);
+      window.addEventListener('touchcancel', endDrag);
+    }
+
+    /* ── Current time reading ── */
+    function getClockParts() {
+      const mw = ((currentMinutes % 720) + 720) % 720;
+      const sw = ((Math.round(currentSeconds) % 60) + 60) % 60;
+      const rm = Math.round(mw) % 720;
+      return {
+        hour12: Math.floor(rm / 60) % 12 || 12,
+        minute:  rm % 60,
+        second:  sw,
+      };
+    }
+
+    function fmt(h, m, s, secs) {
+      const base = `${h}:${String(m).padStart(2,'0')}`;
+      return secs ? `${base}:${String(s).padStart(2,'0')}` : base;
+    }
+
+    /* ── Badge ── */
+    function updateBadge() {
+      const { hour12, minute, second } = getClockParts();
+      if (isShowActive) showValueEl.textContent = fmt(hour12, minute, second, isSecondsMode);
+    }
+
+    /* ── Target time display ── */
+    const targetTimeTextEl = document.getElementById('targetTimeText');
+
+    function updateTargetDisplay() {
+      challengeTimeEl.classList.toggle('seconds-mode', isSecondsMode);
+      targetTimeTextEl.textContent = fmt(targetHour, targetMinute, targetSecond, isSecondsMode);
+    }
+
+    /* ── Random target ── */
+    function randomTarget() {
+      targetHour   = Math.floor(Math.random() * 12) + 1;
+      targetSecond = isSecondsMode ? Math.floor(Math.random() * 60) : 0;
+
+      if (diff === 'easy') {
+        targetMinute = Math.floor(Math.random() * 12) * 5 + [0, 5][Math.floor(Math.random() * 2)];
+      } else {
+        targetMinute = Math.floor(Math.random() * 60);
+      }
+
+      updateTargetDisplay();
+      hideHint();
+      checkBtn.classList.remove('correct', 'wrong');
+      checkBtn.textContent = 'Check Answer';
+
+      if (isShowActive) {
+        isShowActive = false;
+        showBtn.classList.remove('show-active');
+      }
+    }
+
+    /* ── Show button ── */
+    function updateShowBtn() {
+      showBtn.classList.toggle('show-active', isShowActive);
+      showBtn.setAttribute('aria-label', isShowActive ? 'Hide current time' : 'Show current time');
+      showButtonLabelEl.textContent = 'Show';
+    }
+
+    function toggleShow() {
+      isShowActive = !isShowActive;
+      updateShowBtn();
+      if (isShowActive) updateBadge();
+    }
+
+    /* ── Hint ghost hands ── */
+    function showHint() {
+      const totalM = targetHour * 60 + targetMinute;
+      const hA = totalM * 0.5;
+      const mA = targetMinute * 6;
+      hintHour.style.transform   = `translate(-50%, -100%) rotate(${hA}deg)`;
+      hintMinute.style.transform = `translate(-50%, -100%) rotate(${mA}deg)`;
+      hintHour.classList.add('visible');
+      hintMinute.classList.add('visible');
+      if (hintTimer) clearTimeout(hintTimer);
+      hintTimer = setTimeout(hideHint, 3000);
+    }
+    function hideHint() {
+      hintHour.classList.remove('visible');
+      hintMinute.classList.remove('visible');
+    }
+
+    function checkAnswer() {
+      const { hour12, minute, second } = getClockParts();
+      const hOk = hour12 === targetHour;
+      const mOk = minute  === targetMinute;
+      const sOk = !isSecondsMode || second === targetSecond;
+      const correct = hOk && mOk && sOk;
+
+      checkBtn.classList.remove('correct', 'wrong');
+      checkBtn.classList.add(correct ? 'correct' : 'wrong');
+      checkBtn.textContent = correct ? 'Correct' : 'Try Again';
+
+      if (correct) {
+        score++;
+        streak++;
+        if (streak > bestStreak) bestStreak = streak;
+        setTimeout(() => randomTarget(), 1400);
+      } else {
+        streak = 0;
+        setTimeout(() => {
+          checkBtn.classList.remove('correct', 'wrong');
+          checkBtn.textContent = 'Check Answer';
+        }, 1200);
+      }
+
+      scoreCorrectEl.textContent = score;
+      scoreStreakEl.textContent  = streak;
+      scoreBestEl.textContent    = bestStreak;
+    }
+
+    /* ── Seconds mode ── */
+    function setSecondsMode(enabled) {
+      isSecondsMode = enabled;
+      secondHand.style.display = isSecondsMode ? 'block' : 'none';
+      updateTargetDisplay();
+      if (isShowActive) updateBadge();
+    }
+
+    /* ── Difficulty ── */
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        diff = btn.dataset.diff;
+        setSecondsMode(DIFFICULTIES[diff].seconds);
+        randomTarget();
+      });
+    });
+
+    themeButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        applyTheme(button.dataset.themeMode);
+        setUtilityMenu(false);
+      });
+    });
+
+    utilityTrigger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setUtilityMenu(!utilityMenu.classList.contains('open'));
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!utilityMenu.contains(event.target)) setUtilityMenu(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setUtilityMenu(false);
+    });
+
+    const systemThemeListener = () => {
+      if ((document.documentElement.dataset.themeMode || 'system') === 'system') {
+        applyTheme('system', false);
+      }
+    };
+    if (typeof themeQuery.addEventListener === 'function') {
+      themeQuery.addEventListener('change', systemThemeListener);
+    } else if (typeof themeQuery.addListener === 'function') {
+      themeQuery.addListener(systemThemeListener);
+    }
+
+    /* ── Events ── */
+    if (window.PointerEvent) {
+      hourHand.addEventListener('pointerdown',   e => startDrag('hour', e), { passive: false });
+      minuteHand.addEventListener('pointerdown', e => startDrag('minute', e), { passive: false });
+      secondHand.addEventListener('pointerdown', e => startDrag('second', e), { passive: false });
+    } else {
+      hourHand.addEventListener('mousedown',   e => startDrag('hour', e));
+      hourHand.addEventListener('touchstart',  e => startDrag('hour', e), { passive: false });
+      minuteHand.addEventListener('mousedown', e => startDrag('minute', e));
+      minuteHand.addEventListener('touchstart',e => startDrag('minute', e), { passive: false });
+      secondHand.addEventListener('mousedown', e => startDrag('second', e));
+      secondHand.addEventListener('touchstart',e => startDrag('second', e), { passive: false });
+    }
+
+    checkBtn.addEventListener('click',       checkAnswer);
+    challengeTimeEl.addEventListener('click', randomTarget);
+    showBtn.addEventListener('click',        toggleShow);
+    centerHintBtn.addEventListener('click',  e => { e.stopPropagation(); showHint(); });
+
+    /* ── Init ── */
+    buildClock();
+    setClockFromMinutes(0);
+    setClockFromSeconds(0);
+    let savedThemeMode = 'system';
+    try {
+      savedThemeMode = localStorage.getItem(THEME_STORAGE_KEY) || 'system';
+    } catch {}
+    applyTheme(savedThemeMode, false);
+    setSecondsMode(false);
+    updateShowBtn();
+    randomTarget();
+  </script>
+</body>
+</html>
